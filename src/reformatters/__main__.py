@@ -5,8 +5,8 @@ from sentry_sdk.integrations.typer import TyperIntegration
 from reformatters.common import deploy
 from reformatters.common.config import Config
 from reformatters.common.dynamical_dataset import DynamicalDatasetStorageConfig
+from reformatters.contrib.uarizona.swann.analysis import UarizonaSwannAnalysisDataset
 from reformatters.example.new_dataset import initialize_new_integration
-from reformatters.u_arizona.swann import SWANNDataset
 
 
 class GCSStorageConfig(DynamicalDatasetStorageConfig):
@@ -17,7 +17,7 @@ class GCSStorageConfig(DynamicalDatasetStorageConfig):
 
 # In this fork, we (currently) are only using and deploying the SWANN dataset.
 DYNAMICAL_DATASETS = [
-    SWANNDataset(
+    UarizonaSwannAnalysisDataset(
         storage_config=GCSStorageConfig(),
     ),
 ]
