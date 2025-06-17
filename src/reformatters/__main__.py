@@ -15,7 +15,8 @@ class GCSStorageConfig(DynamicalDatasetStorageConfig):
     base_path: str = "gs://upstream-gridded-zarrs"
 
 
-UPSTREAM_DATASETS = [
+# In this fork, we (currently) are only using and deploying the SWANN dataset.
+DYNAMICAL_DATASETS = [
     SWANNDataset(
         storage_config=GCSStorageConfig(),
     ),
@@ -37,7 +38,7 @@ if Config.is_sentry_enabled:
 app = typer.Typer(pretty_exceptions_show_locals=False)
 app.command()(initialize_new_integration)
 
-for dataset in UPSTREAM_DATASETS:
+for dataset in DYNAMICAL_DATASETS:
     app.add_typer(dataset.get_cli(), name=dataset.dataset_id)
 
 
@@ -45,7 +46,7 @@ for dataset in UPSTREAM_DATASETS:
 def deploy_operational_updates(
     docker_image: str | None = None,
 ) -> None:
-    deploy.deploy_operational_updates(UPSTREAM_DATASETS, docker_image)
+    deploy.deploy_operational_updates(DYNAMICAL_DATASETS, docker_image)
 
 
 if __name__ == "__main__":
